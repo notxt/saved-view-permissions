@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="App">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -8,33 +8,176 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header">
-                <h1>Saved View Permissions</h1>
-            </div>
-            <h3>How can we replicate the existing shared save view system?</h3>
-            <div class="old">
-                Title: Old System
-                User->SavedView:
-            </div>
-            <div class="new">
-                Title: New System Proposal
-                User->Site: AWR (7)
-                User-->Site: --R (1)
-                Site->SavedView: AWR (7)
-            </div>
+<div class="container" ng-controller="Ctrl">
+    <div class="page-header">
+        <h1>Saved View Permissions</h1>
+    </div>
 
-            <h3>How can we improve on it?</h3>
-            <h3>Will there be new complications that need to be considered?</h3>
-            <h3>Will other elements of the system need to be modified to provide automated support for the permission structures required for sharing saved views?</h3>
+    <h2>How can we replicate the existing shared save view system?</h2>
+    <p class="lead">In the current system, access is determined in three ways:</p>
+    <ol>
+        <li>Created By</li>
+        <li>Saved View ACL</li>
+        <li>User Level >40</li>
+    </ol>
+
+    <h4>Created By</h4>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="createdBy" rows="15" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('createdBy', createdBy)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <p class="text-info">CreatedBy user currently can't update saved views</p>
+            <div id="createdBy"></div>
         </div>
     </div>
+
+    <h4>ACL</h4>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="acl" rows="15" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('acl', acl)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="acl"></div>
+        </div>
+    </div>
+
+    <h4>User Level >40</h4>
+    <p class="lead">Of course the <mark>superuser</mark> flag could be used, but <strong>Company Admin</strong> could also look something like:</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="userLevel40" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('userLevel40', userLevel40)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="userLevel40"></div>
+        </div>
+    </div>
+
+    <h2>How can we improve on it?</h2>
+    <p class="lead">Yes!</p>
+    <ol>
+        <li>Views must be shared on a per user basis</li>
+        <li>If users don't have measurable access they are kicked out</li>
+    </ol>
+
+    <h4>Solution: Let users share savedViews with sites</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <p class="lead text-center">Do we need this?</p>
+            <img src="img/userAccess.png">
+        </div>
+        <div class="col-md-6">
+            <p class="lead text-center"> ... when we could just</p>
+            <p class="text-center">
+                <button class="btn btn-warning" ng-click="shareWithSite()">{{ siteShare }}</button>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="siteSavedView" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('siteSavedView', siteSavedView)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="siteSavedView"></div>
+        </div>
+    </div>
+    <p class="lead text-center">Now users can read through the site relationship</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="userSiteSavedView" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('userSiteSavedView', userSiteSavedView)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="userSiteSavedView"></div>
+        </div>
+    </div>
+
+    <h4>Solution: Give savedView read access to it's measurables</h4>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="measurableAccess" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('measurableAccess', measurableAccess)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="measurableAccess"></div>
+        </div>
+    </div>
+
+    <p class="lead text-center text-danger">If the savedView was shared, user can now read all it's measurables</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="userSiteSavedViewMeasurableAccess" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('userSiteSavedViewMeasurableAccess', userSiteSavedViewMeasurableAccess)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="userSiteSavedViewMeasurableAccess"></div>
+        </div>
+    </div>
+
+    <h4>Solution: Keep it the same</h4>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="keepItSame" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('keepItSame', keepItSame)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="keepItSame"></div>
+        </div>
+    </div>
+    <p class="lead text-center text-info">SavedViews are not containers for measurables!</p>
+
+    <h4>Bonus: Share with region ... or company!</h4>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="companySavedView" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('companySavedView', companySavedView)">refresh</button>
+        </div>
+        <div class="col-md-8">
+            <div id="companySavedView"></div>
+        </div>
+    </div>
+
+    <h2>Will there be new complications that need to be considered?</h2>
+    <ul>
+        <li>Still need a way to alert admin when user doesn't have measurable permission ...</li>
+        <li>Will the PSV script be a <mark>superuser</mark>? Is that a security issue ...</li>
+        <li>Is a savedView one thing? Does <mark>-w-</mark> mean that you can update axis and components ...</li>
+        <li>Are there more questions I haven't even <em>thought</em> of yet ...</li>
+        <li>Where am I going to eat lunch ...</li>
+    </ul>
+
+    <h2>Will other elements of the system need to be modified to provide automated support for the permission structures required for sharing saved views?</h2>
+
+
 </div>
 
 <!-- JQuery -->
 <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+
+<!-- Angular Core -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 
 <!-- Bower -->
 <script src="bower_components/raphael/raphael-min.js"></script>
@@ -42,6 +185,7 @@
 <script src="bower_components/js-sequence-diagrams/build/sequence-diagram-min.js"></script>
 
 <!-- App -->
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="js/App.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
