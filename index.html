@@ -10,8 +10,14 @@
 
 <div class="container" ng-controller="Ctrl">
     <div class="page-header">
-        <h1>Saved View Permissions</h1>
+        <h1>
+            Saved View Permissions
+        </h1>
     </div>
+
+    <p class="warning">
+        <small>A very small percentage of individuals may experience epileptic seizures or blackouts when exposed to certain light patterns or flashing lights. Exposure to certain patterns or backgrounds on a when watching a presentation may trigger epileptic seizures or blackouts in these individuals. These conditions may trigger previously undetected epileptic symptoms or seizures in persons who have no history of prior seizures or epilepsy. If you, or anyone in your family has an epileptic condition or has had seizures of any kind, do not watch this presentation.</small>
+    </p>
 
     <h2>How can we replicate the existing shared save view system?</h2>
     <p class="lead">In the current system, access is determined in three ways:</p>
@@ -61,7 +67,7 @@
             <div id="userLevel40"></div>
         </div>
     </div>
-    <p class="lead text-center text-info">Update: After conversation it was decided that this is a use case for proxy rather than a permissions structure</p>
+    <p class="lead text-info">Update: After conversation it was decided that this is a use case for <mark>proxy</mark> rather than a permissions structure</p>
 
     <h2>How can we improve on it?</h2>
     <p class="lead">Yes!</p>
@@ -70,14 +76,14 @@
         <li>If users don't have measurable access they are kicked out</li>
     </ol>
 
-    <h4>Solution: Let users share savedViews with sites</h4>
+    <h4>Problem: "I have to share <em>each</em> savedView with <em>each</em> user" <a href="http://admin.energysensei.info/saved-view/#/10507" target="_blank">:(</a></h4>
     <div class="row">
         <div class="col-md-6">
-            <p class="lead text-center">Do we need this?</p>
+            <p class="lead text-center">Why would we?</p>
             <img src="img/userAccess.png">
         </div>
         <div class="col-md-6">
-            <p class="lead text-center"> ... when we could just</p>
+            <p class="lead text-center"> ... when we could ...</p>
             <p class="text-center">
                 <button class="btn btn-warning" ng-click="shareWithSite()">{{ siteShare }}</button>
             </p>
@@ -86,7 +92,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <textarea class="form-control" json-text ng-model="siteSavedView" rows="30" cols="50"></textarea>
+                <textarea class="form-control" json-text ng-model="siteSavedView" rows="15" cols="50"></textarea>
             </div>
             <button class="btn btn-default" ng-click="refresh('siteSavedView', siteSavedView)">refresh</button>
         </div>
@@ -107,7 +113,7 @@
         </div>
     </div>
 
-    <h4>Solution: Give savedView read access to it's measurables</h4>
+    <h4>Problem: "Users get booted when looking at a savedView"</h4>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -120,7 +126,7 @@
         </div>
     </div>
 
-    <p class="lead text-center text-danger">If the savedView was shared, user can now read all it's measurables</p>
+    <p class="lead text-center text-danger after-thought">If the savedView was shared, user can now read all it's measurables</p>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -145,7 +151,7 @@
             <div id="keepItSame"></div>
         </div>
     </div>
-    <p class="lead text-center text-info">SavedViews are not containers for measurables!</p>
+    <p class="lead text-center text-info">SavedViews are <mark>not a container</mark> for measurables!</p>
 
     <h4>Bonus: Share with region ... or company!</h4>
     <div class="row">
@@ -182,13 +188,11 @@
 
     <h2>Will there be new complications that need to be considered?</h2>
     <ul>
-        <li>When the owner is leaves SENSEI, should that savedView die ...</li>
-        <li>Does that mean that if Ben or Kim leaves we lose everything ...</li>
-        <li>Still need a way to alert admin when user doesn't have measurable permission ...</li>
-        <li>Will the PSV script be a <mark>superuser</mark>? Is that a security issue ...</li>
         <li>Is a savedView one thing? Does <mark>-w-</mark> mean that you can update axis and components ...</li>
-        <li>Are there more questions I haven't even <em>thought</em> of yet ...</li>
-        <li>Where am I going to eat lunch ...</li>
+        <li>Will the PSV script be a <mark>superuser</mark>? Is that a security issue ...</li>
+        <li>What happens to a shared saved view when the creator is deleted ...</li>
+        <li>Still need a way to alert admin when user doesn't have measurable permission ...</li>
+        <li>Where should we eat lunch ...</li>
     </ul>
 
     <br>

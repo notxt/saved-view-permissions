@@ -182,10 +182,6 @@ app.controller(
         Diagram.parse(instructions).drawSVG(id, {theme: 'simple'});
       };
 
-      function startBlink() {
-
-      }
-
       $scope.siteShare = 'Share with site';
       let blinkId;
       function startBlink() {

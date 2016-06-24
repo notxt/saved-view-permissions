@@ -1,10 +1,32 @@
 h2 {
-    margin-top: 100px;
+    margin-top: 800px;
 }
 h4 {
-    margin-top: 60px;
+    margin-top: 800px;
 }
 
 li {
     font-size: 16px;
+}
+
+small {
+    font-size: 5px !important;
+}
+
+.warning {
+    margin-left: 450px;
+    margin-right: 450px
+}
+
+.after-thought {
+    margin-top: 500px !important;
+    margin-bottom: 500px !important;
+}
+
+.container > p {
+    margin-top: 100px;
+}
+
+.container > p.lead {
+    margin-top: 20px;
 }
