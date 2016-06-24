@@ -169,7 +169,7 @@ app.controller(
         return read + write + admin;
       }
 
-      function refresh(id, permissions) {
+      $scope.refresh = function (id, permissions) {
         let instructions = permissions.reduce((agg, permission) => {
           return agg.concat(_.map(permission.permissionMap, (perms, type) => {
             return `${permission.source.type} ${permission.source.id}->${permission.target.type} ${permission.target.id}: ${type}:${translateToCaption(perms)}`;
@@ -180,19 +180,49 @@ app.controller(
         $(`#${id}`).empty();
 
         Diagram.parse(instructions).drawSVG(id, {theme: 'simple'});
+      };
+
+      function startBlink() {
+
       }
 
-
       $scope.siteShare = 'Share with site';
-      $scope.shareWithSite = function shareWithSite() {
+      let blinkId;
+      function startBlink() {
+        blinkId = setInterval(blink, 150);
+      }
+
+      function blink() {
+        var oElem = document.getElementById("background");
+        oElem.style.backgroundColor = oElem.style.backgroundColor == "red" ? "blue" : "red";
+      }
+
+      function stopBlink() {
+        clearInterval(blinkId);
+        var oElem = document.getElementById("background");
+        oElem.style.backgroundColor = "white";
+      }
+      $scope.shareWithSite = function () {
         if ($scope.siteShare === 'Share with site') {
           $scope.siteShare = 'Oh god! Stop sharing with site!';
+          startBlink();
         return;
         }
         $scope.siteShare = 'Share with site';
+        stopBlink();
       };
 
-      $scope.refresh = refresh;
+      $scope.createUserPermission = function() {
+        $scope.savedViewService = [
+          {
+            source: { type: 'user', id: 'creator'},
+            target: { type: 'savedView', id: 'newSavedView'},
+            permissionMap: {
+              '.': 7
+            }
+          }
+        ];
+      }
     }
   ]
 );

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body id="background">
 
 <div class="container" ng-controller="Ctrl">
     <div class="page-header">
@@ -61,6 +61,7 @@
             <div id="userLevel40"></div>
         </div>
     </div>
+    <p class="lead text-center text-info">Update: After conversation it was decided that this is a use case for proxy rather than a permissions structure</p>
 
     <h2>How can we improve on it?</h2>
     <p class="lead">Yes!</p>
@@ -159,8 +160,30 @@
         </div>
     </div>
 
+    <h2>Will other elements of the system need to be modified to provide automated support for the permission structures required for sharing saved views?</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <p class="lead text-center">On creation ...</p>
+            <p class="text-center">
+                <button class="btn btn-warning" ng-click="createUserPermission()">Create New Saved View</button>
+            </p>
+        </div>
+        <div class="col-md-4">
+            <p class="lead text-center"><mark>saved-view-service</mark> POSTs</p>
+            <div class="form-group">
+                <textarea class="form-control" json-text ng-model="savedViewService" rows="30" cols="50"></textarea>
+            </div>
+            <button class="btn btn-default" ng-click="refresh('savedViewService', savedViewService)">refresh</button>
+        </div>
+        <div class="col-md-4">
+            <div id="savedViewService"></div>
+        </div>
+    </div>
+
     <h2>Will there be new complications that need to be considered?</h2>
     <ul>
+        <li>When the owner is leaves SENSEI, should that savedView die ...</li>
+        <li>Does that mean that if Ben or Kim leaves we lose everything ...</li>
         <li>Still need a way to alert admin when user doesn't have measurable permission ...</li>
         <li>Will the PSV script be a <mark>superuser</mark>? Is that a security issue ...</li>
         <li>Is a savedView one thing? Does <mark>-w-</mark> mean that you can update axis and components ...</li>
@@ -168,8 +191,61 @@
         <li>Where am I going to eat lunch ...</li>
     </ul>
 
-    <h2>Will other elements of the system need to be modified to provide automated support for the permission structures required for sharing saved views?</h2>
-
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p class="text-center">... fin</p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
 </div>
 
